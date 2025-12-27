@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy New Year Mikabites</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
+    <style>
+        /* --- 1. Page Setup --- */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #020205; /* Ultra dark background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            font-family: 'Sacramento', cursive;
+        }
+
+        /* --- 2. The Container --- */
+        .neon-container {
+            text-align: center;
+            position: relative;
+            z-index: 10; /* Ensure text is above the confetti */
+            padding: 20px;
+        }
+
+        /* --- 3. Text Typography --- */
+        h1 {
+            font-size: 4.5rem;
+            line-height: 1.2;
+            margin: 0;
+            color: #fff;
+            text-transform: uppercase; /* Optional: makes it look more like a sign */
+        }
+
+        /* --- 4. Neon Color Classes & Animations --- */
+        
+        /* General flicker applied to all neon text */
+        .neon-text {
+            animation: flicker 1.5s infinite alternate;
+        }
+
+        /* Style 1: Main Header (Color shifting) */
+        .neon-main {
+            /* We don't set a static color here, we let the animation handle it */
+            animation: colorCycle 4s linear infinite, flicker 2s infinite alternate;
+        }
+
+        /* Style 2: The "In Advance" highlight (Cyan/Blue) */
+        .neon-cyan {
+            color: #fff;
+            text-shadow:
+                0 0 5px #fff,
+                0 0 10px #00ffff,
+                0 0 20px #00ffff,
+                0 0 40px #00ffff,
+                0 0 80px #00ffff;
+        }
+
+        /* Style 3: Connecting words (Purple/Violet) */
+        .neon-purple {
+            font-size: 3rem; /* Slightly smaller */
+            color: #fff;
+            text-shadow:
+                0 0 5px #fff,
+                0 0 10px #bc13fe,
+                0 0 20px #bc13fe,
+                0 0 40px #bc13fe,
+                0 0 80px #bc13fe;
+        }
+
+        /* Style 4: Staff Name (Gold/Orange) */
+        .neon-gold {
+            color: #fff;
+            text-shadow:
+                0 0 5px #fff,
+                0 0 10px #ffaa00,
+                0 0 20px #ffaa00,
+                0 0 40px #ffaa00,
+                0 0 80px #ff4500; /* Reddish-orange outer glow */
+        }
+
+
+        /* --- 5. Keyframe Animations --- */
+        
+        /* Makes the text brightness fluctuate like real neon */
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                opacity: 1;
+                filter: brightness(100%);
+            }
+            20%, 24%, 55% {
+                opacity: 0.8;
+                filter: brightness(150%); /* Briefly get brighter */
+            }
+        }
+
+        /* Cycles through colors for the main header */
+        @keyframes colorCycle {
+            0% { text-shadow: 0 0 10px #ff0055, 0 0 40px #ff0055, 0 0 80px #ff0055; } /* Pink */
+            25% { text-shadow: 0 0 10px #ffcc00, 0 0 40px #ffcc00, 0 0 80px #ffcc00; } /* Yellow */
+            50% { text-shadow: 0 0 10px #00ff99, 0 0 40px #00ff99, 0 0 80px #00ff99; } /* Green */
+            75% { text-shadow: 0 0 10px #00ccff, 0 0 40px #00ccff, 0 0 80px #00ccff; } /* Blue */
+            100% { text-shadow: 0 0 10px #ff0055, 0 0 40px #ff0055, 0 0 80px #ff0055; } /* Back to Pink */
+        }
+
+        /* --- 6. Confetti Background CSS --- */
+        .confetti {
+            position: absolute;
+            top: -10px;
+            opacity: 0.8;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            h1 { font-size: 3rem; }
+            .neon-purple { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="neon-container">
+        <h1>
+            <span class="neon-main">Happy New Year</span> <br>
+            <span class="neon-cyan neon-text">in Advance</span> <br>
+            <span class="neon-purple neon-text">to</span> <br>
+            <span class="neon-gold neon-text">Mikabite Staffs</span>
+        </h1>
+    </div>
+
+    <script>
+        // --- JavaScript for Celebration Confetti ---
+        function createConfetti() {
+            const body = document.querySelector('body');
+            const count = 100; // Increase for more dense confetti
+            // Vibrant neon color palette for background particles
+            const colors = ['#ff0055', '#00ffff', '#ffaa00', '#00ff99', '#bc13fe'];
+
+            for (let i = 0; i < count; i++) {
+                let confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                
+                // random properties
+                let size = Math.random() * 8 + 4; // Size between 4px and 12px
+                let color = colors[Math.floor(Math.random() * colors.length)];
+                let left = Math.random() * 100 + 'vw';
+                let duration = Math.random() * 3 + 3; // Fall speed between 3s and 6s
+                let delay = Math.random() * 5; // Random starting delay
+
+                // Apply styles
+                confetti.style.backgroundColor = color;
+                confetti.style.left = left;
+                confetti.style.width = size + 'px';
+                confetti.style.height = size + 'px';
+                // Randomly make some circles and some squares
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0%';
+                
+                // Apply animation timings
+                confetti.style.animationDuration = duration + 's';
+                confetti.style.animationDelay = '-' + delay + 's'; // Negative delay makes them start immediately scattered
+
+                body.appendChild(confetti);
+            }
+        }
+
+        createConfetti();
+    </script>
+
+</body>
+</html>
